@@ -256,6 +256,9 @@
 
 .heroStats div {
   min-height: 4rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
 }
 
 .heroStats strong {
@@ -1580,11 +1583,14 @@
   }
 
   .hero {
-    min-height: 760px;
+    min-height: 720px;
+    align-items: flex-end;
   }
 
   .heroMedia {
-    background-position: center;
+    background-image: url('../assets/hero-mobile.png');
+    background-position: 58% center;
+    background-size: cover;
   }
 
   .heroOverlay {
@@ -1597,7 +1603,9 @@
   }
 
   .heroInner {
-    padding: 6.2rem 0 4rem;
+    width: min(90%, 560px);
+    margin-right: 5%;
+    padding: 6rem 0 2.8rem;
   }
 
   .hero h1,
@@ -1618,6 +1626,35 @@
   .labFeatures,
   .contactForm {
     grid-template-columns: 1fr;
+  }
+
+  .heroActions {
+    margin-bottom: 1.6rem;
+  }
+
+  .heroStats {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.7rem;
+    max-width: 100%;
+    padding: 0.9rem 0.75rem;
+  }
+
+  .heroStats div {
+    min-height: 4.65rem;
+    align-items: center;
+    justify-content: flex-start;
+    text-align: center;
+  }
+
+  .heroStats strong {
+    font-size: 1.62rem;
+  }
+
+  .heroStats span {
+    max-width: 6.8rem;
+    margin-top: 0.4rem;
+    font-size: 0.72rem;
+    line-height: 1.28;
   }
 
   .testimonialCarousel {
@@ -1713,6 +1750,38 @@
     height: 3.35rem;
     right: 1rem;
     bottom: 1rem;
+  }
+}
+
+@media (max-width: 390px) {
+  .hero {
+    min-height: 700px;
+  }
+
+  .heroInner {
+    padding-bottom: 2.4rem;
+  }
+
+  .hero h1 {
+    font-size: 2.95rem;
+  }
+
+  .heroStats {
+    gap: 0.45rem;
+    padding: 0.78rem 0.55rem;
+  }
+
+  .heroStats div {
+    min-height: 4.45rem;
+  }
+
+  .heroStats strong {
+    font-size: 1.42rem;
+  }
+
+  .heroStats span {
+    font-size: 0.66rem;
+    line-height: 1.22;
   }
 }
 
