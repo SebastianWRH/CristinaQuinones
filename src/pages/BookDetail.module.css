@@ -93,6 +93,41 @@
   line-height: 1.85;
 }
 
+.buyButton {
+  min-height: 3.15rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1.2rem;
+  padding: 0.98rem 1.72rem;
+  color: #ffffff;
+  background: var(--red);
+  border: 1px solid var(--red);
+  border-radius: 4px;
+  box-shadow: 0 0.85rem 1.8rem rgba(192, 57, 43, 0.22);
+  font-size: 0.9rem;
+  font-weight: 800;
+  line-height: 1;
+  text-decoration: none;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
+}
+
+.buyButton:hover {
+  background: #9f2f24;
+  border-color: #9f2f24;
+  box-shadow: 0 1rem 2rem rgba(159, 47, 36, 0.24);
+  transform: translateY(-2px);
+}
+
+.buyButton:focus-visible {
+  outline: 2px solid var(--red);
+  outline-offset: 3px;
+}
+
 .contentGrid {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(280px, 0.55fr);

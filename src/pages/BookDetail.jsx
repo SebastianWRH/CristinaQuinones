@@ -12,6 +12,7 @@ const bookDetails = {
       subtitle: 'Consumer Insights en el Marketing',
       year: '2013',
       publisher: 'Editorial Planeta',
+      buyUrl: 'https://www.planetadelibros.com.pe/libro-desnudando-la-mente-del-consumidor/187813',
       image: consumerMindBookImage,
       imageAlt: 'Portada del libro Desnudando la Mente del Consumidor',
       intro:
@@ -34,6 +35,7 @@ const bookDetails = {
       subtitle: 'Insights y Tendencias del Consumo',
       year: '2019',
       publisher: 'Editorial Planeta',
+      buyUrl: 'https://www.planetadelibros.com.pe/libro-estrategias-con-calle/294680',
       image: streetStrategyBookImage,
       imageAlt: 'Portada del libro Estrategias con Calle',
       intro:
@@ -58,6 +60,7 @@ const bookDetails = {
       subtitle: 'Consumer Insights in Marketing',
       year: '2013',
       publisher: 'Editorial Planeta',
+      buyUrl: 'https://www.planetadelibros.com.pe/libro-desnudando-la-mente-del-consumidor/187813',
       image: consumerMindBookImage,
       imageAlt: 'Cover of Desnudando la Mente del Consumidor',
       intro:
@@ -80,6 +83,7 @@ const bookDetails = {
       subtitle: 'Insights and Consumer Trends',
       year: '2019',
       publisher: 'Editorial Planeta',
+      buyUrl: 'https://www.planetadelibros.com.pe/libro-estrategias-con-calle/294680',
       image: streetStrategyBookImage,
       imageAlt: 'Cover of Estrategias con Calle',
       intro:
@@ -135,6 +139,14 @@ function BookDetail() {
             <p className={styles.subtitle}>{book.subtitle}</p>
             <blockquote>{book.quote}</blockquote>
             <p>{book.intro}</p>
+            <a
+              href={book.buyUrl}
+              target="_blank"
+              rel="noreferrer"
+              className={styles.buyButton}
+            >
+              {language === 'es' ? 'Comprar en Planeta' : 'Buy at Planeta'}
+            </a>
           </div>
         </div>
 
