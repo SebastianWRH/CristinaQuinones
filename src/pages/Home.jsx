@@ -380,7 +380,7 @@ function Home() {
 
           <div className={styles.conferenceList}>
             {conferences.map((conference) => (
-              <article key={conference.title}>
+              <article key={conference.title} className={styles.conferenceCard}>
                 <h3>{conference.title}</h3>
                 <p>{conference.body}</p>
                 <span>{conference.format}</span>

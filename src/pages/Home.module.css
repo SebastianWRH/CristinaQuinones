@@ -596,7 +596,7 @@
 }
 
 .conferenceHeroImage,
-.conferenceList article,
+.conferenceCard,
 .booksGrid article,
 .serviceGrid article,
 .labFeatures article,
@@ -605,7 +605,7 @@
   border-radius: 8px;
 }
 
-.conferenceList article,
+.conferenceCard,
 .booksGrid article,
 .testimonialCard,
 .contactForm {
@@ -671,12 +671,15 @@
   line-height: 1.25;
 }
 
-.conferenceList article {
+.conferenceCard {
   min-height: 270px;
+  position: relative;
   display: flex;
   flex-direction: column;
   padding: 2rem;
-  background: #ffffff;
+  overflow: hidden;
+  background:
+    linear-gradient(180deg, #ffffff 0%, #fdfcfa 100%);
   border: 1px solid var(--line);
   transition:
     border-color 0.2s ease,
@@ -684,13 +687,29 @@
     transform 0.2s ease;
 }
 
-.conferenceList article:hover {
+.conferenceCard::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--red);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.conferenceCard:hover {
   border-color: rgba(192, 57, 43, 0.36);
   box-shadow: 0 1.4rem 2.8rem rgba(17, 17, 17, 0.09);
   transform: translateY(-2px);
 }
 
-.conferenceList article h3 {
+.conferenceCard:hover::before {
+  opacity: 1;
+}
+
+.conferenceCard h3 {
   margin: 0 0 0.75rem;
   font-family: var(--serif);
   font-size: 1.55rem;
@@ -698,14 +717,14 @@
   line-height: 1.2;
 }
 
-.conferenceList article p {
+.conferenceCard p {
   margin: 0 0 1.4rem;
   color: var(--muted);
   font-size: 0.96rem;
   line-height: 1.7;
 }
 
-.conferenceList article span {
+.conferenceCard span {
   margin-top: auto;
   color: var(--red);
   font-size: 0.78rem;
