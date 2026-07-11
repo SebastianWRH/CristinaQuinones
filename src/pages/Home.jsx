@@ -713,6 +713,16 @@ function Home() {
             <button type="submit">{t('home.contact.submit')}</button>
           </form>
         </section>
+
+        <a
+          href="https://api.whatsapp.com/send?phone=51998244997"
+          target="_blank"
+          rel="noreferrer"
+          className={styles.whatsappFloat}
+          aria-label={t('footer.whatsapp')}
+        >
+          <span aria-hidden="true" />
+        </a>
       </div>
     </>
   );
