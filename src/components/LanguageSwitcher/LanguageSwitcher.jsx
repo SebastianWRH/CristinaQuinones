@@ -61,37 +61,36 @@ function LanguageSwitcher() {
           className={`${styles.flag} ${flagClassByLanguage[language]}`}
           aria-hidden="true"
         />
-        <span className={styles.menuIcon} aria-hidden="true">
-          <span />
-          <span />
-          <span />
-        </span>
       </button>
 
-      {isOpen && (
-        <div className={styles.menu} role="menu" aria-label={t('language.selectorLabel')}>
-          {inactiveLanguages.map((languageCode) => {
-            const label = t(`language.options.${languageCode}`);
+      <div
+        className={`${styles.menu} ${isOpen ? styles.menuOpen : ''}`}
+        role="menu"
+        aria-label={t('language.selectorLabel')}
+        aria-hidden={!isOpen}
+      >
+        {inactiveLanguages.map((languageCode) => {
+          const label = t(`language.options.${languageCode}`);
 
-            return (
-              <button
-                key={languageCode}
-                type="button"
-                className={styles.option}
-                onClick={() => handleLanguageChange(languageCode)}
-                aria-label={label}
-                role="menuitem"
-                title={label}
-              >
-                <span
-                  className={`${styles.flag} ${flagClassByLanguage[languageCode]}`}
-                  aria-hidden="true"
-                />
-              </button>
-            );
-          })}
-        </div>
-      )}
+          return (
+            <button
+              key={languageCode}
+              type="button"
+              className={styles.option}
+              onClick={() => handleLanguageChange(languageCode)}
+              aria-label={label}
+              role="menuitem"
+              tabIndex={isOpen ? 0 : -1}
+              title={label}
+            >
+              <span
+                className={`${styles.flag} ${flagClassByLanguage[languageCode]}`}
+                aria-hidden="true"
+              />
+            </button>
+          );
+        })}
+      </div>
     </div>
   );
 }

@@ -8,84 +8,65 @@
 
 .trigger,
 .option {
-  width: 3.1rem;
-  height: 2.45rem;
+  width: 1.7rem;
+  height: 1.25rem;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   padding: 0;
-  background: #ffffff;
-  border: 1px solid rgba(17, 17, 17, 0.12);
-  border-radius: 999px;
+  background: transparent;
+  border: 0;
+  border-radius: 2px;
+  box-shadow: none;
   cursor: pointer;
-  box-shadow: 0 0.55rem 1.15rem rgba(17, 17, 17, 0.08);
-  transition:
-    background-color 0.2s ease,
-    border-color 0.2s ease,
-    box-shadow 0.2s ease,
-    transform 0.2s ease;
-}
-
-.trigger {
-  gap: 0.38rem;
-  padding-inline: 0.48rem;
-}
-
-.trigger:hover,
-.option:hover {
-  border-color: rgba(192, 57, 43, 0.52);
-  box-shadow: 0 0.7rem 1.35rem rgba(17, 17, 17, 0.12);
-  transform: translateY(-1px);
 }
 
 .trigger:focus-visible,
 .option:focus-visible {
   outline: 2px solid #c0392b;
-  outline-offset: 3px;
+  outline-offset: 4px;
 }
 
-.menuIcon {
-  width: 0.7rem;
-  display: inline-flex;
-  flex-direction: column;
-  gap: 0.14rem;
-}
-
-.menuIcon span {
-  width: 100%;
-  height: 1px;
+.flag {
+  width: 1.5rem;
+  height: 1rem;
   display: block;
-  background: #111111;
-  border-radius: 999px;
+  flex: 0 0 auto;
+  overflow: hidden;
+  border-radius: 2px;
+  box-shadow: 0 0 0 1px rgba(17, 17, 17, 0.16);
+  transition:
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
+}
+
+.trigger:hover .flag,
+.option:hover .flag {
+  box-shadow: 0 0 0 1px rgba(192, 57, 43, 0.42);
+  transform: scale(1.12);
 }
 
 .menu {
   position: absolute;
   top: calc(100% + 0.48rem);
-  right: 0;
+  left: 50%;
   z-index: 20;
-  padding: 0.28rem;
-  background: rgba(255, 255, 255, 0.96);
-  border: 1px solid rgba(17, 17, 17, 0.1);
-  border-radius: 999px;
-  box-shadow: 0 1rem 2rem rgba(17, 17, 17, 0.14);
-  backdrop-filter: blur(16px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, -0.3rem) scale(0.96);
+  transform-origin: top center;
+  transition:
+    opacity 0.18s ease,
+    transform 0.18s ease;
 }
 
-.option {
-  width: 2.55rem;
-  height: 2.1rem;
-  box-shadow: none;
-}
-
-.flag {
-  width: 1.38rem;
-  height: 0.94rem;
-  display: block;
-  flex: 0 0 auto;
-  overflow: hidden;
-  border-radius: 2px;
-  box-shadow: 0 0 0 1px rgba(17, 17, 17, 0.18);
+.menuOpen {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translate(-50%, 0) scale(1);
 }
 
 .flagEs {
@@ -114,8 +95,14 @@
 }
 
 @media (max-width: 560px) {
-  .trigger {
-    width: 2.85rem;
-    height: 2.35rem;
+  .trigger,
+  .option {
+    width: 1.8rem;
+    height: 1.35rem;
+  }
+
+  .flag {
+    width: 1.58rem;
+    height: 1.05rem;
   }
 }
