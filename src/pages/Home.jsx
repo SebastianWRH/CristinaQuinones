@@ -1,5 +1,6 @@
 import { useRef, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
+import { Link } from 'react-router-dom';
 import storyImage from '../../imagenes/mi historia.jpg';
 import conferenceImage from '../../imagenes/conferencias.jpg';
 import labImage from '../../imagenes/laboratorio insighter.jpg';
@@ -10,9 +11,9 @@ import styles from './Home.module.css';
 
 const bookImages = [consumerMindBookImage, streetStrategyBookImage];
 
-const bookLinks = [
-  'https://consumer-truth.com.pe/libro/',
-  'https://consumer-truth.com.pe/libro-estrategias-con-calle/',
+const bookRoutes = [
+  '/libros/desnudando-la-mente-del-consumidor',
+  '/libros/estrategias-con-calle',
 ];
 
 const videoIds = [
@@ -401,22 +402,27 @@ function Home() {
 
           <div className={styles.booksGrid}>
             {books.map((book, index) => (
-              <article key={book.title}>
-                <img
-                  className={styles.bookCover}
-                  src={bookImages[index]}
-                  alt={book.title}
-                  loading="lazy"
-                />
-                <span>{book.year}</span>
-                <h3>{book.title}</h3>
-                <p className={styles.bookSubtitle}>{book.subtitle}</p>
-                <blockquote>{book.quote}</blockquote>
-                <p>{book.body}</p>
-                <a href={bookLinks[index]} target="_blank" rel="noreferrer">
-                  {book.action}
-                </a>
-              </article>
+              <Link
+                key={book.title}
+                to={bookRoutes[index]}
+                className={styles.bookCard}
+                aria-label={`${book.action}: ${book.title}`}
+              >
+                <article>
+                  <img
+                    className={styles.bookCover}
+                    src={bookImages[index]}
+                    alt={book.title}
+                    loading="lazy"
+                  />
+                  <span>{book.year}</span>
+                  <h3>{book.title}</h3>
+                  <p className={styles.bookSubtitle}>{book.subtitle}</p>
+                  <blockquote>{book.quote}</blockquote>
+                  <p>{book.body}</p>
+                  <span className={styles.bookCta}>{book.action}</span>
+                </article>
+              </Link>
             ))}
           </div>
         </section>

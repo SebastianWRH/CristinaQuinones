@@ -1,0 +1,204 @@
+.bookPage {
+  --bg: #fdfcfa;
+  --paper: #f4f2ef;
+  --ink: #111111;
+  --muted: #6b625a;
+  --line: rgba(17, 17, 17, 0.12);
+  --red: #c0392b;
+  --serif: 'Cormorant Garamond', Georgia, serif;
+
+  padding: 8.5rem 8.5% 7rem;
+  color: var(--ink);
+  background: var(--bg);
+}
+
+.backLink {
+  display: inline-flex;
+  margin-bottom: 2rem;
+  color: var(--ink);
+  font-size: 0.88rem;
+  font-weight: 800;
+  text-decoration: none;
+  border-bottom: 1px solid var(--red);
+}
+
+.hero {
+  display: grid;
+  grid-template-columns: minmax(220px, 0.46fr) minmax(0, 0.84fr);
+  gap: 4rem;
+  align-items: center;
+  max-width: 1080px;
+  margin: 0 auto;
+}
+
+.coverPanel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 520px;
+  padding: 2rem;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  box-shadow: 0 1.25rem 2.6rem rgba(17, 17, 17, 0.07);
+}
+
+.coverPanel img {
+  width: min(100%, 310px);
+  max-height: 440px;
+  object-fit: contain;
+  filter: drop-shadow(0 1rem 1.6rem rgba(17, 17, 17, 0.16));
+}
+
+.copy {
+  max-width: 660px;
+}
+
+.kicker {
+  margin: 0 0 0.9rem;
+  color: var(--red);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.copy h1 {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: 5rem;
+  font-weight: 300;
+  line-height: 0.95;
+}
+
+.subtitle {
+  margin: 1rem 0 2rem;
+  color: var(--muted);
+  font-size: 1.05rem;
+  font-weight: 800;
+}
+
+.copy blockquote {
+  margin: 0 0 2rem;
+  color: var(--red);
+  font-family: var(--serif);
+  font-size: 1.75rem;
+  font-style: italic;
+  line-height: 1.3;
+}
+
+.copy p:last-child {
+  color: var(--muted);
+  font-size: 1.05rem;
+  line-height: 1.85;
+}
+
+.contentGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 0.55fr);
+  gap: 1.25rem;
+  max-width: 1080px;
+  margin: 4rem auto 0;
+}
+
+.contentGrid article,
+.contentGrid aside {
+  padding: 2rem;
+  background: #ffffff;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  box-shadow: 0 1.25rem 2.6rem rgba(17, 17, 17, 0.045);
+}
+
+.contentGrid h2 {
+  margin: 0 0 1rem;
+  font-family: var(--serif);
+  font-size: 2.1rem;
+  font-weight: 500;
+  line-height: 1.05;
+}
+
+.contentGrid p {
+  margin: 0 0 1rem;
+  color: var(--muted);
+  font-size: 1rem;
+  line-height: 1.8;
+}
+
+.contentGrid p:last-child {
+  margin-bottom: 0;
+}
+
+.contentGrid ul {
+  display: grid;
+  gap: 0.9rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.contentGrid li {
+  position: relative;
+  padding-left: 1.15rem;
+  color: var(--muted);
+  line-height: 1.65;
+}
+
+.contentGrid li::before {
+  content: '';
+  position: absolute;
+  top: 0.72rem;
+  left: 0;
+  width: 0.42rem;
+  height: 0.42rem;
+  background: var(--red);
+  border-radius: 999px;
+}
+
+@media (max-width: 960px) {
+  .bookPage {
+    padding: 7.5rem 5% 5.5rem;
+  }
+
+  .hero,
+  .contentGrid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .coverPanel {
+    min-height: 420px;
+  }
+
+  .copy h1 {
+    font-size: 4rem;
+  }
+}
+
+@media (max-width: 560px) {
+  .bookPage {
+    padding-top: 7rem;
+  }
+
+  .coverPanel {
+    min-height: 340px;
+    padding: 1.4rem;
+  }
+
+  .coverPanel img {
+    max-height: 300px;
+  }
+
+  .copy h1 {
+    font-size: 3.1rem;
+  }
+
+  .copy blockquote {
+    font-size: 1.42rem;
+  }
+
+  .contentGrid article,
+  .contentGrid aside {
+    padding: 1.5rem;
+  }
+}

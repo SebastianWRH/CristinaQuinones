@@ -744,6 +744,12 @@
   max-width: 1080px;
 }
 
+.bookCard {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+
 .booksGrid article {
   min-height: 0;
   display: grid;
@@ -753,6 +759,21 @@
   padding: 1.6rem;
   background: var(--bg);
   border: 1px solid rgba(17, 17, 17, 0.09);
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
+}
+
+.bookCard:hover article,
+.bookCard:focus-visible article {
+  border-color: rgba(192, 57, 43, 0.36);
+  box-shadow: 0 1.4rem 2.8rem rgba(17, 17, 17, 0.09);
+  transform: translateY(-2px);
+}
+
+.bookCard:focus-visible {
+  outline: 0;
 }
 
 .bookCover {
@@ -810,7 +831,7 @@
   color: var(--muted);
 }
 
-.booksGrid a,
+.bookCta,
 .textButton {
   margin-top: auto;
   color: var(--ink);

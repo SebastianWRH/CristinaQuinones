@@ -7,6 +7,7 @@ import Biography from './pages/Biography';
 import Method from './pages/Method';
 import Conferences from './pages/Conferences';
 import Books from './pages/Books';
+import BookDetail from './pages/BookDetail';
 import Resources from './pages/Resources';
 import ConsumerTruth from './pages/ConsumerTruth';
 import Contact from './pages/Contact';
@@ -22,6 +23,7 @@ function App() {
         <Route path="metodo" element={<Method />} />
         <Route path="conferencias" element={<Conferences />} />
         <Route path="libros" element={<Books />} />
+        <Route path="libros/:slug" element={<BookDetail />} />
         <Route path="recursos" element={<Resources />} />
         <Route path="consumer-truth" element={<ConsumerTruth />} />
         <Route path="contacto" element={<Contact />} />
