@@ -369,17 +369,16 @@ function Home() {
             <a href="#contacto" className={styles.primaryButton}>
               {t('home.conferences.action')}
             </a>
+            <figure className={styles.conferenceHeroImage}>
+              <img src={conferenceImage} alt={t('home.conferences.cardTitle')} loading="lazy" />
+              <figcaption>
+                <span>{t('home.conferences.cardTitle')}</span>
+                <p>{t('home.conferences.cardQuote')}</p>
+              </figcaption>
+            </figure>
           </div>
 
           <div className={styles.conferenceList}>
-            <aside className={styles.speakerCard}>
-              <img src={conferenceImage} alt={t('home.conferences.cardTitle')} loading="lazy" />
-              <div>
-                <span>{t('home.conferences.cardTitle')}</span>
-                <p>{t('home.conferences.cardQuote')}</p>
-              </div>
-            </aside>
-
             {conferences.map((conference) => (
               <article key={conference.title}>
                 <h3>{conference.title}</h3>
