@@ -1,0 +1,159 @@
+.form {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  padding: 2rem;
+  background: var(--bg, #fdfcfa);
+  border: 1px solid rgba(17, 17, 17, 0.09);
+  border-radius: 8px;
+  box-shadow: 0 1.25rem 2.6rem rgba(17, 17, 17, 0.045);
+}
+
+.form h3,
+.form > p,
+.fullField,
+.formError,
+.status {
+  grid-column: 1 / -1;
+}
+
+.form h3 {
+  margin: 0;
+  color: var(--ink, #111111);
+  font-family: var(--serif, 'Cormorant Garamond', Georgia, serif);
+  font-size: 2.3rem;
+  font-weight: 400;
+  line-height: 1.1;
+}
+
+.form > p {
+  margin: -0.6rem 0 0.6rem;
+  color: var(--muted, #6b625a);
+}
+
+.form label {
+  display: grid;
+  gap: 0.4rem;
+  color: var(--muted, #6b625a);
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.form label > span {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.form small {
+  color: rgba(107, 98, 90, 0.78);
+  font-size: 0.68rem;
+  font-weight: 600;
+}
+
+.form input,
+.form select,
+.form textarea {
+  width: 100%;
+  min-height: 3rem;
+  color: var(--ink, #111111);
+  background: #ffffff;
+  border: 1px solid rgba(17, 17, 17, 0.14);
+  border-radius: 5px;
+  font: inherit;
+  padding: 0.8rem 0.9rem;
+}
+
+.form textarea {
+  resize: vertical;
+}
+
+.form input:focus,
+.form select:focus,
+.form textarea:focus {
+  border-color: var(--red, #c0392b);
+  outline: 2px solid rgba(192, 57, 43, 0.16);
+}
+
+.form [aria-invalid='true'] {
+  border-color: var(--red, #c0392b);
+}
+
+.error,
+.formError,
+.status {
+  font-size: 0.78rem;
+  line-height: 1.45;
+}
+
+.error,
+.formError {
+  color: var(--red, #c0392b);
+}
+
+.formError {
+  margin: 0;
+}
+
+.form button {
+  min-height: 3.2rem;
+  color: #ffffff;
+  background: var(--red, #c0392b);
+  border: 1px solid var(--red, #c0392b);
+  border-radius: 5px;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  grid-column: 1 / -1;
+  transition:
+    background-color 0.2s ease,
+    opacity 0.2s ease,
+    transform 0.2s ease;
+}
+
+.form button:hover:not(:disabled) {
+  background: var(--red-dark, #9f2f24);
+  transform: translateY(-1px);
+}
+
+.form button:disabled {
+  cursor: wait;
+  opacity: 0.72;
+}
+
+.form button:focus-visible {
+  outline: 2px solid var(--red, #c0392b);
+  outline-offset: 3px;
+}
+
+.status {
+  min-height: 1.2rem;
+  margin: -0.25rem 0 0;
+  color: var(--muted, #6b625a);
+}
+
+.statusSuccess {
+  color: #286d36;
+}
+
+.honeypot {
+  width: 1px;
+  height: 1px;
+  position: absolute;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+@media (max-width: 720px) {
+  .form {
+    grid-template-columns: 1fr;
+    padding: 1.5rem;
+  }
+
+  .form h3 {
+    font-size: 2rem;
+  }
+}

@@ -111,6 +111,52 @@
   white-space: nowrap;
 }
 
+.menuButton {
+  width: 2.5rem;
+  height: 2.5rem;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 0.28rem;
+  padding: 0;
+  color: #111111;
+  background: transparent;
+  border: 1px solid rgba(17, 17, 17, 0.14);
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.menuButton span {
+  width: 1.05rem;
+  height: 1px;
+  display: block;
+  background: currentColor;
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
+}
+
+.menuButton[aria-expanded='true'] span:first-child {
+  transform: translateY(0.29rem) rotate(45deg);
+}
+
+.menuButton[aria-expanded='true'] span:nth-child(2) {
+  opacity: 0;
+}
+
+.menuButton[aria-expanded='true'] span:last-child {
+  transform: translateY(-0.29rem) rotate(-45deg);
+}
+
+.menuButton:focus-visible,
+.cta:focus-visible,
+.logo:focus-visible,
+.nav a:focus-visible {
+  outline: 2px solid #c0392b;
+  outline-offset: 4px;
+}
+
 .cta:hover {
   background: #9f2f24;
   border-color: #9f2f24;
@@ -133,13 +179,54 @@
   }
 
   .nav {
-    grid-column: 1 / -1;
-    grid-row: 2;
-    width: 100%;
-    flex-wrap: wrap;
-    justify-self: center;
-    justify-content: center;
-    gap: 0.75rem 1.15rem;
+    width: min(24rem, calc(100vw - 2rem));
+    position: absolute;
+    top: calc(100% + 0.6rem);
+    right: 5%;
+    z-index: 120;
+    display: grid;
+    gap: 0.15rem;
+    padding: 0.8rem;
+    background: rgba(253, 252, 250, 0.98);
+    border: 1px solid rgba(17, 17, 17, 0.1);
+    border-radius: 8px;
+    box-shadow: 0 1.4rem 3rem rgba(17, 17, 17, 0.14);
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-0.45rem);
+    transition:
+      opacity 0.18s ease,
+      transform 0.18s ease,
+      visibility 0.18s ease;
+    visibility: hidden;
+  }
+
+  .navOpen {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+    visibility: visible;
+  }
+
+  .nav a {
+    min-height: 2.8rem;
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 0.85rem;
+    border-radius: 5px;
+    font-size: 0.95rem;
+  }
+
+  .nav a::after {
+    display: none;
+  }
+
+  .nav a:hover {
+    background: rgba(192, 57, 43, 0.08);
+  }
+
+  .menuButton {
+    display: inline-flex;
   }
 
   .tools {
@@ -163,7 +250,9 @@
   }
 
   .nav {
-    display: none;
+    right: 5%;
+    left: 5%;
+    width: auto;
   }
 
   .tools {

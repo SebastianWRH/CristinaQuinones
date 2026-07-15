@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://www.cristinaquinones.com/</loc>
+    <xhtml:link rel="alternate" hreflang="es-PE" href="https://www.cristinaquinones.com/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.cristinaquinones.com/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.cristinaquinones.com/" />
+  </url>
+  <url>
+    <loc>https://www.cristinaquinones.com/libros/desnudando-la-mente-del-consumidor</loc>
+    <xhtml:link rel="alternate" hreflang="es-PE" href="https://www.cristinaquinones.com/libros/desnudando-la-mente-del-consumidor" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.cristinaquinones.com/libros/desnudando-la-mente-del-consumidor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.cristinaquinones.com/libros/desnudando-la-mente-del-consumidor" />
+  </url>
+  <url>
+    <loc>https://www.cristinaquinones.com/libros/estrategias-con-calle</loc>
+    <xhtml:link rel="alternate" hreflang="es-PE" href="https://www.cristinaquinones.com/libros/estrategias-con-calle" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.cristinaquinones.com/libros/estrategias-con-calle" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.cristinaquinones.com/libros/estrategias-con-calle" />
+  </url>
+</urlset>

@@ -1211,6 +1211,47 @@
   border: 0;
 }
 
+.videoFacade {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  display: block;
+  padding: 0;
+  overflow: hidden;
+  background: var(--ink);
+  border: 0;
+  cursor: pointer;
+}
+
+.videoFacade img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  opacity: 0.9;
+  transition: transform 0.25s ease;
+}
+
+.videoFacade .videoPlayIcon {
+  width: 4rem;
+  height: 4rem;
+  top: 50%;
+  right: auto;
+  bottom: auto;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.videoFacade:hover img,
+.videoFacade:focus-visible img {
+  transform: scale(1.03);
+}
+
+.videoFacade:focus-visible {
+  outline: 3px solid var(--red);
+  outline-offset: 3px;
+}
+
 .testimonialCarousel {
   max-width: 1120px;
   display: grid;
@@ -1588,7 +1629,7 @@
   }
 
   .heroMedia {
-    background-image: url('../assets/hero-mobile.png');
+    background-image: url('../assets/hero-mobile.webp');
     background-position: 58% center;
     background-size: cover;
   }

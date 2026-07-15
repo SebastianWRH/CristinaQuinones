@@ -14,6 +14,10 @@ function isSupportedLanguage(language) {
 }
 
 function readStoredLanguage() {
+  if (typeof window === 'undefined') {
+    return null;
+  }
+
   try {
     return window.localStorage.getItem(STORAGE_KEY);
   } catch {
@@ -35,9 +39,7 @@ export function LanguageProvider({ children }) {
   const [language, setLanguageState] = useState(getInitialLanguage);
 
   const setLanguage = useCallback((nextLanguage) => {
-    if (isSupportedLanguage(nextLanguage)) {
-      setLanguageState(nextLanguage);
-    }
+    setLanguageState(isSupportedLanguage(nextLanguage) ? nextLanguage : DEFAULT_LANGUAGE);
   }, []);
 
   const toggleLanguage = useCallback(() => {
@@ -58,7 +60,7 @@ export function LanguageProvider({ children }) {
 
   const value = useMemo(
     () => ({
-      dictionary: translations[language],
+      dictionary: translations[language] ?? translations[DEFAULT_LANGUAGE],
       language,
       setLanguage,
       toggleLanguage,

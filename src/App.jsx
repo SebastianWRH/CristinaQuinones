@@ -3,15 +3,9 @@ import { Routes, Route } from 'react-router-dom';
 import MainLayout from './layouts/MainLayout';
 
 import Home from './pages/Home';
-import Biography from './pages/Biography';
-import Method from './pages/Method';
-import Conferences from './pages/Conferences';
-import Books from './pages/Books';
 import BookDetail from './pages/BookDetail';
-import Resources from './pages/Resources';
-import ConsumerTruth from './pages/ConsumerTruth';
-import Contact from './pages/Contact';
 import NotFound from './pages/NotFound';
+import SectionRedirect from './components/SectionRedirect';
 
 function App() {
   return (
@@ -19,14 +13,14 @@ function App() {
       <Route path="/" element={<MainLayout />}>
         <Route index element={<Home />} />
 
-        <Route path="biografia" element={<Biography />} />
-        <Route path="metodo" element={<Method />} />
-        <Route path="conferencias" element={<Conferences />} />
-        <Route path="libros" element={<Books />} />
+        <Route path="biografia" element={<SectionRedirect sectionId="sobre-mi" />} />
+        <Route path="metodo" element={<SectionRedirect sectionId="consumer-truth" />} />
+        <Route path="conferencias" element={<SectionRedirect sectionId="conferencias" />} />
+        <Route path="libros" element={<SectionRedirect sectionId="libros" />} />
         <Route path="libros/:slug" element={<BookDetail />} />
-        <Route path="recursos" element={<Resources />} />
-        <Route path="consumer-truth" element={<ConsumerTruth />} />
-        <Route path="contacto" element={<Contact />} />
+        <Route path="recursos" element={<SectionRedirect sectionId="videoteca" />} />
+        <Route path="consumer-truth" element={<SectionRedirect sectionId="consumer-truth" />} />
+        <Route path="contacto" element={<SectionRedirect sectionId="contacto" />} />
 
         <Route path="*" element={<NotFound />} />
       </Route>

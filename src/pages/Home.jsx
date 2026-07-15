@@ -1,185 +1,62 @@
-import { useRef, useState } from 'react';
-import { Helmet } from 'react-helmet-async';
+﻿import { useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import storyImage from '../../imagenes/mi historia.jpg';
 import conferenceImage from '../../imagenes/conferencias.jpg';
 import labImage from '../../imagenes/laboratorio insighter.jpg';
-import consumerMindBookImage from '../../imagenes/libro_desnudando_la_mente_del_consumidor.jpg';
-import streetStrategyBookImage from '../../imagenes/web_insightsconcalle_bootcamp_libro_estrategias_calle_.png';
+import { books as bookData, getBookCopy } from '../data/books';
+import {
+  getVideoEmbedUrl,
+  getVideoThumbnail,
+  getVideoTitle,
+  getVideoWatchUrl,
+  videos as videoData,
+} from '../data/videos';
+import {
+  getLocalizedTestimonial,
+  testimonials as testimonialData,
+} from '../data/testimonials';
+import ContactForm from '../components/ContactForm/ContactForm';
+import SEO from '../components/SEO/SEO';
 import { useTranslation } from '../i18n/useTranslation';
 import styles from './Home.module.css';
-
-const bookImages = [consumerMindBookImage, streetStrategyBookImage];
-
-const bookRoutes = [
-  '/libros/desnudando-la-mente-del-consumidor',
-  '/libros/estrategias-con-calle',
-];
-
-const videoIds = [
-  'cuyyIQputDE',
-  'uj9Iw1lN-3w',
-  'GVdrzj-ap9Q',
-  'y6PERZ9Y0_U',
-  'vOnJdm65_y0',
-  '1-7tQqoGxMQ',
-  'K4pF3fQO39E',
-  '6IcXKEpbDQU',
-  '8pjk4JwpACA',
-];
-
-const videoLinks = videoIds.map((videoId) => `https://www.youtube.com/watch?v=${videoId}`);
-const videoThumbnails = videoIds.map((videoId) => `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`);
-
-const videoItems = {
-  es: [
-    'Que es un insight: la mejor forma de descubrir insights es pisando la calle',
-    'Parejas y Esposos Empresarios: como nacio Consumer Truth',
-    'Podcast Marketing con Calle: 5 razones para creer en Marketing con Calle',
-    'Podcast Raul Diaz: como encontrar insights en marketing',
-    'Imanpop Podcast: Insights con Calle, conectar antes que vender',
-    'Lideres PUCP: Consumer Insights y desnudando la mente del consumidor',
-    'Podcast con Ximena Delgado: la clave para conectar con tu publico',
-    'Fuera de la Caja: psicologia del consumidor, marketing y tendencias',
-    'Cafe Taipa: los insights que la IA no ve definen la reputacion',
-  ],
-  en: [
-    'What an insight is: the best way to find insights is on the street',
-    'Entrepreneur couples: how Consumer Truth was born',
-    'Marketing con Calle podcast: 5 reasons to believe in street-smart marketing',
-    'Raul Diaz podcast: how to find insights in marketing',
-    'Imanpop Podcast: insights with street, connecting before selling',
-    'Lideres PUCP: consumer insights and uncovering the consumer mind',
-    'Podcast with Ximena Delgado: the key to connecting with your audience',
-    'Fuera de la Caja: consumer psychology, marketing and trends',
-    'Cafe Taipa: the insights AI cannot see define reputation',
-  ],
-};
-
-const testimonialItems = {
-  es: [
-    {
-      quote:
-        'Gracias a Consumer Truth entendimos que no basta con quedarse en el escritorio. Hay que salir a buscar al consumidor en las calles.',
-      initials: 'MS',
-      name: 'Martín Saldaña',
-      role: 'CEO · Unión',
-    },
-    {
-      quote:
-        'Nos enseñaron a buscar siempre un poco más adentro para encontrar aquellos insights verdaderamente relevantes para el negocio.',
-      initials: 'SB',
-      name: 'Sandra Botetano',
-      role: 'Jefe de Marketing · UTP',
-    },
-    {
-      quote:
-        'Hemos podido conocer, de primera mano, las emociones que mueven a nuestros consumidores. Una experiencia que cambió nuestra forma de hacer marketing.',
-      initials: 'CV',
-      name: 'Claudia Vidaurrazaga',
-      role: 'Gerente Comercial · La Ibérica',
-    },
-    {
-      quote:
-        'Nos han permitido desnudar nuestra mente, cambiar nuestra forma de pensar y de ver las cosas. Trabajar con Cristina es una transformación, no una consultoría.',
-      initials: 'AG',
-      name: 'Andrea Guzmán',
-      role: 'Brand Manager · Ajinomoto',
-    },
-    {
-      quote:
-        'Compartimos su espíritu, su energía y su pasión por el consumidor. Nos enseñaron a Pisar la Calle, y eso cambió la forma en que construimos nuestra marca.',
-      initials: 'LV',
-      name: 'Laura Villanueva',
-      role: 'Gerente de Marca · Mibanco',
-    },
-    {
-      quote:
-        'Esta experiencia me ha ratificado que tener al consumidor en el centro de la estrategia es lo correcto. Y Cristina lo demuestra con cada metodología.',
-      initials: 'CG',
-      name: 'Carlos González-Artigas',
-      role: 'Gerente General · La Fabril, Ecuador',
-    },
-  ],
-  en: [
-    {
-      quote:
-        'Thanks to Consumer Truth, we understood that staying at the desk is not enough. You have to go find consumers in the streets.',
-      initials: 'MS',
-      name: 'Martín Saldaña',
-      role: 'CEO · Unión',
-    },
-    {
-      quote:
-        'They taught us to keep looking deeper to find insights that are truly relevant to the business.',
-      initials: 'SB',
-      name: 'Sandra Botetano',
-      role: 'Head of Marketing · UTP',
-    },
-    {
-      quote:
-        'We were able to experience first-hand the emotions that move our consumers. It changed the way we do marketing.',
-      initials: 'CV',
-      name: 'Claudia Vidaurrazaga',
-      role: 'Commercial Manager · La Ibérica',
-    },
-    {
-      quote:
-        'They allowed us to uncover our mindset, change the way we think and see things. Working with Cristina is a transformation, not just consulting.',
-      initials: 'AG',
-      name: 'Andrea Guzmán',
-      role: 'Brand Manager · Ajinomoto',
-    },
-    {
-      quote:
-        'We share her spirit, energy and passion for the consumer. They taught us to hit the street, and that changed how we build our brand.',
-      initials: 'LV',
-      name: 'Laura Villanueva',
-      role: 'Brand Manager · Mibanco',
-    },
-    {
-      quote:
-        'This experience confirmed that putting the consumer at the center of strategy is the right thing to do. Cristina proves it with every methodology.',
-      initials: 'CG',
-      name: 'Carlos González-Artigas',
-      role: 'General Manager · La Fabril, Ecuador',
-    },
-  ],
-};
 
 function Home() {
   const [activeVideoIndex, setActiveVideoIndex] = useState(0);
   const [shouldAutoplayVideo, setShouldAutoplayVideo] = useState(false);
   const testimonialTrackRef = useRef(null);
-  const { language, t } = useTranslation();
-  const heroBadges = t('home.hero.badges');
-  const stats = t('home.stats');
-  const marquee = t('home.marquee');
-  const storyParagraphs = t('home.story.paragraphs');
-  const timeline = t('home.story.timeline');
-  const phrases = t('home.thinking.phrases');
-  const conferences = t('home.conferences.items');
-  const books = t('home.books.items');
-  const services = t('home.consumerTruth.services');
-  const metrics = t('home.consumerTruth.metrics');
-  const labParagraphs = t('home.lab.paragraphs');
-  const labFeatures = t('home.lab.features');
-  const videos = videoItems[language] ?? videoItems.es;
-  const testimonials = testimonialItems[language] ?? testimonialItems.es;
-  const contactOptions = t('home.contact.options');
-  const activeVideoId = videoIds[activeVideoIndex];
-  const activeVideoTitle = videos[activeVideoIndex];
+  const { language, t, tArray } = useTranslation();
+  const heroBadges = tArray('home.hero.badges');
+  const stats = tArray('home.stats');
+  const marquee = tArray('home.marquee');
+  const storyParagraphs = tArray('home.story.paragraphs');
+  const timeline = tArray('home.story.timeline');
+  const phrases = tArray('home.thinking.phrases');
+  const conferences = tArray('home.conferences.items');
+  const books = bookData.map((book) => ({
+    ...book,
+    copy: getBookCopy(book, language),
+  }));
+  const services = tArray('home.consumerTruth.services');
+  const metrics = tArray('home.consumerTruth.metrics');
+  const labParagraphs = tArray('home.lab.paragraphs');
+  const labFeatures = tArray('home.lab.features');
+  const videos = videoData;
+  const testimonials = testimonialData.map((testimonial) =>
+    getLocalizedTestimonial(testimonial, language)
+  );
+  const activeVideo = videos[activeVideoIndex] ?? videos[0];
+  const activeVideoTitle = getVideoTitle(activeVideo, language);
 
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Person',
-    name: 'Cristina Quiñones Dávila',
+    name: 'Cristina QuiÃ±ones DÃ¡vila',
     alternateName: 'Cristina Q',
     url: t('home.meta.canonical'),
     image: t('home.meta.image'),
     jobTitle:
       language === 'es'
-        ? 'Psicóloga social, autora, conferencista y CEO de Consumer Truth'
+        ? 'PsicÃ³loga social, autora, conferencista y CEO de Consumer Truth'
         : 'Social psychologist, author, speaker and Consumer Truth CEO',
     worksFor: {
       '@type': 'Organization',
@@ -215,38 +92,34 @@ function Home() {
     const trackStyles = window.getComputedStyle(track);
     const gap = parseFloat(trackStyles.columnGap || trackStyles.gap) || 0;
     const distance = card.getBoundingClientRect().width + gap;
+    const reducedMotion = window.matchMedia(
+      '(prefers-reduced-motion: reduce)'
+    ).matches;
 
     track.scrollBy({
       left: direction * distance,
-      behavior: 'smooth',
+      behavior: reducedMotion ? 'auto' : 'smooth',
     });
   };
 
   return (
     <>
-      <Helmet>
-        <html lang={language === 'es' ? 'es-PE' : 'en'} />
-        <title>{t('home.meta.title')}</title>
-        <meta name="description" content={t('home.meta.description')} />
-        <meta name="keywords" content={t('home.meta.keywords')} />
-        <meta name="robots" content="index, follow, max-image-preview:large" />
-        <link rel="canonical" href={t('home.meta.canonical')} />
-        <meta property="og:type" content="website" />
-        <meta property="og:site_name" content="Cristina Quiñones" />
-        <meta property="og:title" content={t('home.meta.title')} />
-        <meta property="og:description" content={t('home.meta.description')} />
-        <meta property="og:url" content={t('home.meta.canonical')} />
-        <meta property="og:image" content={t('home.meta.image')} />
-        <meta property="og:locale" content={t('home.meta.locale')} />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={t('home.meta.title')} />
-        <meta name="twitter:description" content={t('home.meta.description')} />
-        <meta name="twitter:image" content={t('home.meta.image')} />
-        <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
-      </Helmet>
+      <SEO
+        title={t('home.meta.title')}
+        description={t('home.meta.description')}
+        keywords={t('home.meta.keywords')}
+        canonical={t('home.meta.canonical')}
+        image={t('home.meta.image')}
+        jsonLd={jsonLd}
+        alternateLinks={[
+          { hrefLang: 'es-PE', href: '/' },
+          { hrefLang: 'en', href: '/' },
+          { hrefLang: 'x-default', href: '/' },
+        ]}
+      />
 
       <div className={styles.home}>
-        <section id="hero" className={styles.hero} aria-label="Cristina Quiñones">
+        <section id="hero" className={styles.hero} aria-label="Cristina QuiÃ±ones">
           <div className={styles.heroMedia} aria-hidden="true" />
           <div className={styles.heroOverlay} aria-hidden="true" />
 
@@ -277,7 +150,10 @@ function Home() {
               </a>
             </div>
 
-            <div className={styles.heroStats} aria-label="Trayectoria">
+            <div
+              className={styles.heroStats}
+              aria-label={language === 'es' ? 'Trayectoria' : 'Track record'}
+            >
               {stats.map((stat) => (
                 <div key={stat.label}>
                   <strong>{stat.value}</strong>
@@ -401,29 +277,33 @@ function Home() {
           </div>
 
           <div className={styles.booksGrid}>
-            {books.map((book, index) => (
-              <Link
-                key={book.title}
-                to={bookRoutes[index]}
-                className={styles.bookCard}
-                aria-label={`${book.action}: ${book.title}`}
-              >
-                <article>
-                  <img
-                    className={styles.bookCover}
-                    src={bookImages[index]}
-                    alt={book.title}
-                    loading="lazy"
-                  />
-                  <span>{book.year}</span>
-                  <h3>{book.title}</h3>
-                  <p className={styles.bookSubtitle}>{book.subtitle}</p>
-                  <blockquote>{book.quote}</blockquote>
-                  <p>{book.body}</p>
-                  <span className={styles.bookCta}>{book.action}</span>
-                </article>
-              </Link>
-            ))}
+            {books.map((book) => {
+              const { copy } = book;
+
+              return (
+                <Link
+                  key={book.slug}
+                  to={`/libros/${book.slug}`}
+                  className={styles.bookCard}
+                  aria-label={`${copy.action}: ${copy.title}`}
+                >
+                  <article>
+                    <img
+                      className={styles.bookCover}
+                      src={book.image}
+                      alt={copy.imageAlt}
+                      loading="lazy"
+                    />
+                    <span>{`${book.year} · ${book.publisher}`}</span>
+                    <h3>{copy.title}</h3>
+                    <p className={styles.bookSubtitle}>{copy.subtitle}</p>
+                    <blockquote>{copy.quote}</blockquote>
+                    <p>{copy.body}</p>
+                    <span className={styles.bookCta}>{copy.action}</span>
+                  </article>
+                </Link>
+              );
+            })}
           </div>
         </section>
 
@@ -473,7 +353,7 @@ function Home() {
 
           <blockquote className={styles.manifesto}>
             <p>{t('home.consumerTruth.manifesto')}</p>
-            <cite>Consumer Truth · Manifiesto</cite>
+            <cite>Consumer Truth Â· Manifiesto</cite>
           </blockquote>
         </section>
 
@@ -520,35 +400,39 @@ function Home() {
           </div>
 
           <div className={styles.videoCarousel} aria-label={t('home.videos.label')}>
-            {videos.map((video, index) => (
-              <button
-                key={video}
-                type="button"
-                className={`${styles.videoThumb} ${
-                  activeVideoIndex === index ? styles.activeVideo : ''
-                }`}
-                onClick={() => {
-                  setActiveVideoIndex(index);
-                  setShouldAutoplayVideo(true);
-                }}
-                aria-pressed={activeVideoIndex === index}
-              >
-                <span className={styles.videoImageWrap}>
-                  <img src={videoThumbnails[index]} alt={video} loading="lazy" />
-                  <span className={styles.videoPlayIcon} aria-hidden="true" />
-                </span>
-                <span className={styles.videoCaption}>
-                  <strong>{video}</strong>
-                </span>
-              </button>
-            ))}
+            {videos.map((video, index) => {
+              const videoTitle = getVideoTitle(video, language);
+
+              return (
+                <button
+                  key={video.id}
+                  type="button"
+                  className={`${styles.videoThumb} ${
+                    activeVideoIndex === index ? styles.activeVideo : ''
+                  }`}
+                  onClick={() => {
+                    setActiveVideoIndex(index);
+                    setShouldAutoplayVideo(false);
+                  }}
+                  aria-pressed={activeVideoIndex === index}
+                >
+                  <span className={styles.videoImageWrap}>
+                    <img src={getVideoThumbnail(video)} alt={videoTitle} loading="lazy" />
+                    <span className={styles.videoPlayIcon} aria-hidden="true" />
+                  </span>
+                  <span className={styles.videoCaption}>
+                    <strong>{videoTitle}</strong>
+                  </span>
+                </button>
+              );
+            })}
           </div>
 
           <div className={styles.videoPlayerPanel}>
             <div className={styles.videoPlayerHeader}>
               <p>{activeVideoTitle}</p>
               <a
-                href={videoLinks[activeVideoIndex]}
+                href={getVideoWatchUrl(activeVideo)}
                 target="_blank"
                 rel="noreferrer"
               >
@@ -557,15 +441,30 @@ function Home() {
             </div>
 
             <div className={styles.videoPlayer}>
-              <iframe
-                src={`https://www.youtube.com/embed/${activeVideoId}?rel=0${
-                  shouldAutoplayVideo ? '&autoplay=1' : ''
-                }`}
-                title={activeVideoTitle}
-                loading="lazy"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                allowFullScreen
-              />
+              {shouldAutoplayVideo ? (
+                <iframe
+                  src={`${getVideoEmbedUrl(activeVideo)}&autoplay=1`}
+                  title={activeVideoTitle}
+                  loading="lazy"
+                  referrerPolicy="strict-origin-when-cross-origin"
+                  allow="autoplay; encrypted-media; picture-in-picture; web-share"
+                  allowFullScreen
+                />
+              ) : (
+                <button
+                  type="button"
+                  className={styles.videoFacade}
+                  onClick={() => setShouldAutoplayVideo(true)}
+                  aria-label={
+                    language === 'es'
+                      ? `Reproducir video: ${activeVideoTitle}`
+                      : `Play video: ${activeVideoTitle}`
+                  }
+                >
+                  <img src={getVideoThumbnail(activeVideo)} alt="" loading="lazy" />
+                  <span className={styles.videoPlayIcon} aria-hidden="true" />
+                </button>
+              )}
             </div>
           </div>
 
@@ -596,7 +495,7 @@ function Home() {
               onClick={() => scrollTestimonials(-1)}
               aria-label={language === 'es' ? 'Ver testimonios anteriores' : 'View previous testimonials'}
             >
-              ‹
+              â€¹
             </button>
 
             <div className={styles.testimonialViewport}>
@@ -607,7 +506,7 @@ function Home() {
                       className={styles.testimonialStars}
                       aria-label={language === 'es' ? '5 estrellas' : '5 stars'}
                     >
-                      ★★★★★
+                      â˜…â˜…â˜…â˜…â˜…
                     </div>
                     <blockquote>{testimonial.quote}</blockquote>
                     <footer>
@@ -628,7 +527,7 @@ function Home() {
               onClick={() => scrollTestimonials(1)}
               aria-label={language === 'es' ? 'Ver testimonios siguientes' : 'View next testimonials'}
             >
-              ›
+              â€º
             </button>
           </div>
         </section>
@@ -670,54 +569,7 @@ function Home() {
             </dl>
           </div>
 
-          <form
-            className={styles.contactForm}
-            onSubmit={(event) => event.preventDefault()}
-          >
-            <h3>{t('home.contact.formTitle')}</h3>
-            <p>{t('home.contact.formIntro')}</p>
-
-            <label>
-              <span>{t('home.contact.fields.name')}</span>
-              <input type="text" name="name" autoComplete="name" />
-            </label>
-
-            <label>
-              <span>{t('home.contact.fields.company')}</span>
-              <input type="text" name="company" autoComplete="organization" />
-            </label>
-
-            <label>
-              <span>{t('home.contact.fields.email')}</span>
-              <input type="email" name="email" autoComplete="email" />
-            </label>
-
-            <label>
-              <span>{t('home.contact.fields.country')}</span>
-              <input type="text" name="country" autoComplete="country-name" />
-            </label>
-
-            <label className={styles.fullField}>
-              <span>{t('home.contact.fields.need')}</span>
-              <select name="need" defaultValue="">
-                <option value="" disabled>
-                  {t('home.contact.fields.need')}
-                </option>
-                {contactOptions.map((option) => (
-                  <option key={option} value={option}>
-                    {option}
-                  </option>
-                ))}
-              </select>
-            </label>
-
-            <label className={styles.fullField}>
-              <span>{t('home.contact.fields.message')}</span>
-              <textarea name="message" rows="5" />
-            </label>
-
-            <button type="submit">{t('home.contact.submit')}</button>
-          </form>
+          <ContactForm />
         </section>
 
         <a

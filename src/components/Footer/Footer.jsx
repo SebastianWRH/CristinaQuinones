@@ -1,64 +1,71 @@
+import { Link } from 'react-router-dom';
 import { useTranslation } from '../../i18n/useTranslation';
 import styles from './Footer.module.css';
 
 const navLinks = [
   {
-    href: '/#sobre-mi',
+    to: '/#sobre-mi',
     labelKey: 'navigation.story',
   },
   {
-    href: '/#frases',
+    to: '/#frases',
     labelKey: 'home.thinking.label',
   },
   {
-    href: '/#conferencias',
+    to: '/#conferencias',
     labelKey: 'navigation.conferences',
   },
   {
-    href: '/#libros',
+    to: '/#libros',
     labelKey: 'navigation.books',
   },
   {
-    href: '/#consumer-truth',
+    to: '/#consumer-truth',
     labelKey: 'navigation.consumerTruth',
   },
   {
-    href: '/#contacto',
+    to: '/#contacto',
     labelKey: 'navigation.contact',
   },
 ];
 
 function Footer() {
-  const { t } = useTranslation();
+  const { language, t } = useTranslation();
 
   return (
     <footer className={styles.footer}>
       <div className={styles.brand}>
-        <a href="/" className={styles.logo}>
+        <Link to="/" className={styles.logo}>
           Cristina<span>Q</span>
-        </a>
+        </Link>
         <p>{t('footer.quote')}</p>
-        <div className={styles.socials} aria-label="Social media">
+        <div
+          className={styles.socials}
+          aria-label={language === 'es' ? 'Redes sociales' : 'Social media'}
+        >
           <a
             href="https://www.linkedin.com/in/crisquinones/"
             target="_blank"
             rel="noreferrer"
+            aria-label="LinkedIn"
           >
-            in
+            IN
           </a>
           <a
             href="https://www.instagram.com/cristina_qd/"
             target="_blank"
             rel="noreferrer"
+            aria-label="Instagram"
           >
-            ig
+            IG
           </a>
           <a
             href="https://www.youtube.com/@Consumer_Truth"
             target="_blank"
             rel="noreferrer"
+            aria-label="YouTube"
           >
-            yt
+            YT
           </a>
         </div>
       </div>
@@ -67,9 +74,9 @@ function Footer() {
         <h2>{t('footer.navTitle')}</h2>
         <nav>
           {navLinks.map((link) => (
-            <a key={link.href} href={link.href}>
+            <Link key={link.to} to={link.to}>
               {t(link.labelKey)}
-            </a>
+            </Link>
           ))}
         </nav>
       </div>
