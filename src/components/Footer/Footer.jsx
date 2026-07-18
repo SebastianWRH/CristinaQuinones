@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import RevealOnScroll from '../RevealOnScroll/RevealOnScroll';
 import { useTranslation } from '../../i18n/useTranslation';
 import styles from './Footer.module.css';
 
@@ -34,7 +35,7 @@ function Footer() {
 
   return (
     <footer className={styles.footer}>
-      <div className={styles.brand}>
+      <RevealOnScroll as="div" className={styles.brand} direction="up" distance={34} duration={820} blur={5}>
         <Link to="/" className={styles.logo}>
           Cristina<span>Q</span>
         </Link>
@@ -68,9 +69,9 @@ function Footer() {
             YT
           </a>
         </div>
-      </div>
+      </RevealOnScroll>
 
-      <div>
+      <RevealOnScroll as="div" delay={100} direction="up" distance={34} duration={820} blur={5}>
         <h2>{t('footer.navTitle')}</h2>
         <nav>
           {navLinks.map((link) => (
@@ -79,9 +80,9 @@ function Footer() {
             </Link>
           ))}
         </nav>
-      </div>
+      </RevealOnScroll>
 
-      <div>
+      <RevealOnScroll as="div" delay={200} direction="up" distance={34} duration={820} blur={5}>
         <h2>{t('footer.bookTitle')}</h2>
         <nav>
           <a
@@ -99,9 +100,9 @@ function Footer() {
             Estrategias con Calle
           </a>
         </nav>
-      </div>
+      </RevealOnScroll>
 
-      <div>
+      <RevealOnScroll as="div" delay={300} direction="up" distance={34} duration={820} blur={5}>
         <h2>{t('footer.contactTitle')}</h2>
         <nav>
           <a href="mailto:info@cristinaquinones.com">info@cristinaquinones.com</a>
@@ -116,12 +117,12 @@ function Footer() {
             {t('footer.whatsapp')}
           </a>
         </nav>
-      </div>
+      </RevealOnScroll>
 
-      <div className={styles.bottom}>
+      <RevealOnScroll as="div" className={styles.bottom} delay={120} direction="up" distance={24} duration={760} blur={3}>
         <p>{t('footer.rights')}</p>
         <p>{t('footer.location')}</p>
-      </div>
+      </RevealOnScroll>
     </footer>
   );
 }

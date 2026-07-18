@@ -1,4 +1,5 @@
 import { Link, useParams } from 'react-router-dom';
+import RevealOnScroll from '../components/RevealOnScroll/RevealOnScroll';
 import SEO from '../components/SEO/SEO';
 import { getBookBySlug, getBookCopy } from '../data/books';
 import { useTranslation } from '../i18n/useTranslation';
@@ -64,11 +65,30 @@ function BookDetail() {
         </Link>
 
         <div className={styles.hero}>
-          <div className={styles.coverPanel}>
+          <RevealOnScroll
+            as="div"
+            className={styles.coverPanel}
+            variant="image"
+            direction="right"
+            distance={44}
+            duration={960}
+            scale={1.05}
+            blur={6}
+            parallax
+            parallaxDistance={16}
+          >
             <img src={book.image} alt={copy.imageAlt} />
-          </div>
+          </RevealOnScroll>
 
-          <div className={styles.copy}>
+          <RevealOnScroll
+            as="div"
+            className={styles.copy}
+            variant="title"
+            direction="left"
+            distance={44}
+            duration={900}
+            blur={0}
+          >
             <p className={styles.kicker}>
               {book.year} · {book.publisher}
             </p>
@@ -84,24 +104,24 @@ function BookDetail() {
             >
               {language === 'es' ? 'Comprar en Planeta' : 'Buy at Planeta'}
             </a>
-          </div>
+          </RevealOnScroll>
         </div>
 
         <div className={styles.contentGrid}>
-          <article>
+          <RevealOnScroll as="article" variant="card" delay={0} distance={42} duration={840} blur={5}>
             <h2>{language === 'es' ? 'Sobre el libro' : 'About the book'}</h2>
             <p>{copy.description}</p>
             <p>{copy.audience}</p>
-          </article>
+          </RevealOnScroll>
 
-          <aside>
+          <RevealOnScroll as="aside" variant="card" delay={100} distance={42} duration={840} blur={5}>
             <h2>{language === 'es' ? 'Temas clave' : 'Key themes'}</h2>
             <ul>
               {copy.highlights.map((highlight) => (
                 <li key={highlight}>{highlight}</li>
               ))}
             </ul>
-          </aside>
+          </RevealOnScroll>
         </div>
       </section>
     </>

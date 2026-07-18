@@ -1,0 +1,71 @@
+.reveal {
+  --reveal-delay: 0ms;
+  --reveal-duration: 840ms;
+  --reveal-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --reveal-x: 0px;
+  --reveal-y: 60px;
+  --reveal-scale: 0.98;
+  --reveal-blur: 8px;
+  --reveal-rotate: 0deg;
+  --reveal-parallax-y: 0px;
+
+  opacity: 0;
+  filter: blur(var(--reveal-blur));
+  transform:
+    translate3d(var(--reveal-x), var(--reveal-y), 0)
+    scale(var(--reveal-scale))
+    rotate(var(--reveal-rotate));
+  transform-origin: center;
+  transition:
+    opacity var(--reveal-duration) var(--reveal-ease) var(--reveal-delay),
+    filter var(--reveal-duration) var(--reveal-ease) var(--reveal-delay),
+    transform var(--reveal-duration) var(--reveal-ease) var(--reveal-delay);
+  will-change: opacity, filter, transform;
+  backface-visibility: hidden;
+}
+
+.reveal[data-reveal-variant='title'] {
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.revealed {
+  opacity: 1;
+  filter: blur(0);
+  transform: translate3d(0, var(--reveal-parallax-y), 0) scale(1) rotate(0deg);
+  will-change: auto;
+}
+
+.revealed[data-reveal-variant='button'] {
+  animation:
+    reveal-button-pop 520ms cubic-bezier(0.22, 1, 0.36, 1)
+    calc(var(--reveal-delay) + var(--reveal-duration)) both;
+}
+
+@keyframes reveal-button-pop {
+  0%,
+  100% {
+    transform: translate3d(0, var(--reveal-parallax-y), 0) scale(1) rotate(0deg);
+  }
+
+  45% {
+    transform: translate3d(0, var(--reveal-parallax-y), 0) scale(1.025) rotate(0deg);
+  }
+
+  70% {
+    transform: translate3d(0, var(--reveal-parallax-y), 0) scale(0.996) rotate(0deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .revealed {
+    opacity: 1 !important;
+    filter: none !important;
+    transform: none !important;
+    transition: none !important;
+    animation: none !important;
+    will-change: auto !important;
+  }
+}
