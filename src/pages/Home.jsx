@@ -1,4 +1,4 @@
-﻿import { useEffect, useRef, useState } from 'react';
+﻿import { useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import storyImage from '../../imagenes/mi historia.jpg';
 import conferenceImage from '../../imagenes/conferencias.jpg';
@@ -35,20 +35,9 @@ function getStatProgress(value) {
   return `${progress}%`;
 }
 
-const timelinePointPositions = [
-  { x: '7.5%', y: '54%', placement: 'top' },
-  { x: '24%', y: '28%', placement: 'bottom' },
-  { x: '41%', y: '52%', placement: 'top' },
-  { x: '58%', y: '74%', placement: 'top' },
-  { x: '75%', y: '38%', placement: 'bottom' },
-  { x: '91.5%', y: '58%', placement: 'top' },
-];
-
 function Home() {
   const [activeVideoIndex, setActiveVideoIndex] = useState(0);
   const [shouldAutoplayVideo, setShouldAutoplayVideo] = useState(false);
-  const timelineStageRef = useRef(null);
-  const timelineTrackRef = useRef(null);
   const testimonialTrackRef = useRef(null);
   const { language, t, tArray } = useTranslation();
   const heroBadges = tArray('home.hero.badges');
@@ -106,74 +95,6 @@ function Home() {
   };
 
   const repeatedMarquee = [...marquee, ...marquee];
-
-  useEffect(() => {
-    const stage = timelineStageRef.current;
-    const track = timelineTrackRef.current;
-
-    if (!stage || !track || typeof window === 'undefined') {
-      return undefined;
-    }
-
-    const reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-    let frame = 0;
-
-    const updateTimelineProgress = () => {
-      frame = 0;
-
-      if (reducedMotionQuery.matches) {
-        stage.style.setProperty('--timeline-progress', '1');
-        stage.style.setProperty('--timeline-x', '0px');
-        stage.style.setProperty('--timeline-image-opacity', '0.88');
-        stage.style.setProperty('--timeline-image-blur', '0px');
-        stage.style.setProperty('--timeline-image-x', '0px');
-        stage.style.setProperty('--timeline-image-y', '0px');
-        stage.style.setProperty('--timeline-image-scale', '1');
-        return;
-      }
-
-      const rect = stage.getBoundingClientRect();
-      const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
-      const scrollableDistance = Math.max(1, rect.height - viewportHeight);
-      const progress = Math.min(Math.max(-rect.top / scrollableDistance, 0), 1);
-      const imageProgress = Math.min(Math.max((progress - 0.12) / 0.36, 0), 1);
-      const horizontalTravel = Math.max(0, track.scrollWidth - window.innerWidth);
-
-      stage.style.setProperty('--timeline-progress', progress.toFixed(4));
-      stage.style.setProperty(
-        '--timeline-x',
-        `${(-horizontalTravel * progress).toFixed(2)}px`
-      );
-      stage.style.setProperty('--timeline-image-opacity', (imageProgress * 0.92).toFixed(3));
-      stage.style.setProperty('--timeline-image-blur', `${((1 - imageProgress) * 8).toFixed(2)}px`);
-      stage.style.setProperty('--timeline-image-x', `${(42 - imageProgress * 42).toFixed(2)}px`);
-      stage.style.setProperty('--timeline-image-y', `${(-18 + imageProgress * 18).toFixed(2)}px`);
-      stage.style.setProperty('--timeline-image-scale', (0.94 + imageProgress * 0.06).toFixed(3));
-    };
-
-    const scheduleTimelineUpdate = () => {
-      if (frame) {
-        return;
-      }
-
-      frame = window.requestAnimationFrame(updateTimelineProgress);
-    };
-
-    updateTimelineProgress();
-    window.addEventListener('scroll', scheduleTimelineUpdate, { passive: true });
-    window.addEventListener('resize', scheduleTimelineUpdate);
-    reducedMotionQuery.addEventListener?.('change', scheduleTimelineUpdate);
-
-    return () => {
-      if (frame) {
-        window.cancelAnimationFrame(frame);
-      }
-
-      window.removeEventListener('scroll', scheduleTimelineUpdate);
-      window.removeEventListener('resize', scheduleTimelineUpdate);
-      reducedMotionQuery.removeEventListener?.('change', scheduleTimelineUpdate);
-    };
-  }, []);
 
   const scrollTestimonials = (direction) => {
     const track = testimonialTrackRef.current;
@@ -407,69 +328,27 @@ function Home() {
                 parallaxDistance={16}
               />
 
+              <ol className={styles.timeline}>
+                {timeline.map((item, index) => (
+                  <RevealOnScroll
+                    as="li"
+                    key={`${item.year}-${item.title}`}
+                    variant="card"
+                    delay={index * 90}
+                    distance={34}
+                    duration={780}
+                    blur={4}
+                  >
+                    <span>{item.year}</span>
+                    <div>
+                      <h3>{item.title}</h3>
+                      <p>{item.body}</p>
+                    </div>
+                  </RevealOnScroll>
+                ))}
+              </ol>
             </div>
           </div>
-
-          <section
-            ref={timelineStageRef}
-            className={styles.timelineStage}
-            aria-label={language === 'es' ? 'Linea de tiempo de Cristina QuiÃ±ones' : 'Cristina QuiÃ±ones timeline'}
-          >
-            <div className={styles.timelineSticky}>
-              <div className={styles.timelineViewport}>
-                <img
-                  className={styles.timelineFloatingImage}
-                  src={storyImage}
-                  alt=""
-                  loading="lazy"
-                  aria-hidden="true"
-                />
-
-                <div ref={timelineTrackRef} className={styles.timelineTrack}>
-                  <svg
-                    className={styles.timelineWave}
-                    viewBox="0 0 2500 640"
-                    preserveAspectRatio="none"
-                    aria-hidden="true"
-                  >
-                    <path
-                      className={styles.timelineWaveBase}
-                      d="M60 345 C260 120 470 130 650 315 S980 515 1180 330 S1510 95 1710 285 S2070 525 2440 245"
-                    />
-                    <path
-                      className={styles.timelineWaveProgress}
-                      pathLength="1"
-                      d="M60 345 C260 120 470 130 650 315 S980 515 1180 330 S1510 95 1710 285 S2070 525 2440 245"
-                    />
-                  </svg>
-
-                  <ol className={styles.timelinePathList}>
-                    {timeline.map((item, index) => {
-                      const point = timelinePointPositions[index] ?? timelinePointPositions[0];
-
-                      return (
-                        <li
-                          key={`${item.year}-${item.title}`}
-                          className={styles.timelineMilestone}
-                          data-placement={point.placement}
-                          style={{
-                            '--point-x': point.x,
-                            '--point-y': point.y,
-                          }}
-                        >
-                          <span>{item.year}</span>
-                          <div>
-                            <h3>{item.title}</h3>
-                            <p>{item.body}</p>
-                          </div>
-                        </li>
-                      );
-                    })}
-                  </ol>
-                </div>
-              </div>
-            </div>
-          </section>
         </section>
 
         <section id="frases" className={styles.darkSection}>

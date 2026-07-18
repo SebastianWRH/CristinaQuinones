@@ -15,7 +15,7 @@
   background: var(--bg);
   font-family: var(--sans);
   line-height: 1.7;
-  overflow-x: clip;
+  overflow-x: hidden;
 }
 
 .home section {
@@ -358,7 +358,7 @@
 }
 
 .storySection {
-  min-height: 0;
+  min-height: 85.875rem;
   display: grid;
   grid-template-columns: minmax(0, 478px) minmax(0, 476px);
   column-gap: 5.45rem;
@@ -452,7 +452,7 @@
 
 .storySide {
   display: grid;
-  gap: 0;
+  gap: 2.5rem;
 }
 
 .storyImage,
@@ -470,197 +470,65 @@
   object-position: center;
 }
 
-.timelineStage {
-  --timeline-progress: 0;
-  --timeline-x: 0px;
-  --timeline-image-opacity: 0;
-  --timeline-image-blur: 8px;
-  --timeline-image-x: 42px;
-  --timeline-image-y: -18px;
-  --timeline-image-scale: 0.94;
-
-  grid-column: 1 / -1;
-  width: 100vw;
-  height: 330vh;
+.timeline {
   position: relative;
-  margin: 6rem calc(50% - 50vw) -7.5rem;
-  color: #ffffff;
-  background:
-    radial-gradient(circle at 72% 20%, rgba(192, 57, 43, 0.17), transparent 34%),
-    linear-gradient(180deg, #111111 0%, #161312 50%, #111111 100%);
-}
-
-.home .timelineStage {
-  padding: 0;
-}
-
-.timelineSticky {
-  height: calc(100svh - var(--header-offset, 86px));
-  position: sticky;
-  top: var(--header-offset, 86px);
-  display: flex;
-  align-items: center;
-  overflow: hidden;
-}
-
-.timelineViewport {
-  width: 100%;
-  height: min(720px, 86svh);
-  position: relative;
-  overflow: hidden;
-}
-
-.timelineViewport::before,
-.timelineViewport::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  z-index: 4;
-  width: min(10vw, 8rem);
-  pointer-events: none;
-}
-
-.timelineViewport::before {
-  left: 0;
-  background: linear-gradient(90deg, #111111, rgba(17, 17, 17, 0));
-}
-
-.timelineViewport::after {
-  right: 0;
-  background: linear-gradient(270deg, #111111, rgba(17, 17, 17, 0));
-}
-
-.timelineFloatingImage {
-  width: min(34vw, 390px);
-  aspect-ratio: 4 / 5;
-  position: absolute;
-  right: clamp(1.25rem, 8vw, 8rem);
-  top: clamp(1rem, 7vh, 5rem);
-  z-index: 1;
-  display: block;
-  object-fit: cover;
-  object-position: center;
-  border-radius: 8px;
-  opacity: var(--timeline-image-opacity);
-  filter: grayscale(0.2) blur(var(--timeline-image-blur));
-  transform:
-    translate3d(
-      var(--timeline-image-x),
-      var(--timeline-image-y),
-      0
-    )
-    scale(var(--timeline-image-scale));
-  box-shadow: 0 1.6rem 3.5rem rgba(0, 0, 0, 0.24);
-}
-
-.timelineTrack {
-  width: clamp(2200px, 210vw, 2750px);
-  height: 100%;
-  position: relative;
-  z-index: 2;
-  transform: translate3d(var(--timeline-x), 0, 0);
-  will-change: transform;
-}
-
-.timelineWave {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  inset: 0;
-  overflow: visible;
-}
-
-.timelineWaveBase,
-.timelineWaveProgress {
-  fill: none;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-
-.timelineWaveBase {
-  stroke: rgba(255, 255, 255, 0.16);
-  stroke-width: 2;
-}
-
-.timelineWaveProgress {
-  stroke: var(--red);
-  stroke-width: 4;
-  stroke-dasharray: 1;
-  stroke-dashoffset: calc(1 - var(--timeline-progress));
-  filter: drop-shadow(0 0 16px rgba(192, 57, 43, 0.25));
-}
-
-.timelinePathList {
-  position: absolute;
-  inset: 0;
+  display: grid;
+  gap: 0;
   margin: 0;
-  padding: 0;
+  padding: 0 0 0 1.7rem;
   list-style: none;
 }
 
-.timelineMilestone {
-  width: min(330px, 19vw);
-  position: absolute;
-  top: var(--point-y);
-  left: var(--point-x);
-  color: #ffffff;
-  transform: translate(-50%, calc(-100% - 2.35rem));
-}
-
-.timelineMilestone[data-placement='bottom'] {
-  transform: translate(-50%, 2.35rem);
-}
-
-.timelineMilestone::before {
+.timeline::before {
   content: '';
-  width: 0.9rem;
-  height: 0.9rem;
   position: absolute;
-  left: 50%;
-  background: var(--red);
-  border: 2px solid #111111;
+  top: 0.65rem;
+  bottom: 0.65rem;
+  left: 0.42rem;
+  width: 1px;
+  background: var(--line);
+}
+
+.timeline li {
+  position: relative;
+  display: grid;
+  grid-template-columns: 5rem 1fr;
+  gap: 1.3rem;
+  padding-bottom: 1.8rem;
+}
+
+.timeline li::before {
+  content: '';
+  position: absolute;
+  top: 0.4rem;
+  left: -1.57rem;
+  width: 0.7rem;
+  height: 0.7rem;
+  background: var(--bg);
+  border: 1px solid rgba(17, 17, 17, 0.2);
   border-radius: 999px;
-  box-shadow:
-    0 0 0 0.42rem rgba(192, 57, 43, 0.16),
-    0 0 1.6rem rgba(192, 57, 43, 0.24);
-  transform: translateX(-50%);
 }
 
-.timelineMilestone[data-placement='top']::before {
-  bottom: -2.85rem;
-}
-
-.timelineMilestone[data-placement='bottom']::before {
-  top: -2.85rem;
-}
-
-.timelineMilestone > span {
-  display: block;
+.timeline li > span {
   color: var(--red);
-  font-family: var(--serif);
-  font-size: clamp(2.45rem, 4.8vw, 5rem);
-  font-weight: 500;
-  line-height: 0.86;
+  font-size: 0.78rem;
+  font-weight: 800;
   text-transform: uppercase;
 }
 
-.timelineMilestone h3 {
-  max-width: 280px;
-  margin: 1rem 0 0.55rem;
-  color: #ffffff;
+.timeline h3 {
+  margin: 0 0 0.4rem;
   font-family: var(--serif);
-  font-size: clamp(1.35rem, 1.8vw, 2rem);
-  font-weight: 500;
-  line-height: 1.02;
+  font-size: 1.3rem;
+  font-weight: 600;
+  line-height: 1.2;
 }
 
-.timelineMilestone p {
-  max-width: 270px;
+.timeline p {
   margin: 0;
-  color: rgba(255, 255, 255, 0.64);
-  font-size: 0.88rem;
-  line-height: 1.62;
+  color: var(--muted);
+  font-size: 0.92rem;
+  line-height: 1.65;
 }
 
 .darkSection,
@@ -1706,11 +1574,6 @@
     margin-bottom: 4rem;
   }
 
-  .timelineStage {
-    margin-top: 4.5rem;
-    margin-bottom: -5.5rem;
-  }
-
   .storyCopy {
     padding-top: 0;
   }
@@ -1941,46 +1804,9 @@
     flex-direction: column;
   }
 
-  .timelineStage {
-    height: 300vh;
-    margin-top: 3.5rem;
-    margin-bottom: -4.5rem;
-  }
-
-  .timelineSticky {
-    height: calc(100svh - var(--header-offset, 72px));
-    top: var(--header-offset, 72px);
-  }
-
-  .timelineViewport {
-    height: min(620px, 84svh);
-  }
-
-  .timelineTrack {
-    width: 2200px;
-  }
-
-  .timelineFloatingImage {
-    width: min(58vw, 230px);
-    right: 1rem;
-    top: 1rem;
-  }
-
-  .timelineMilestone {
-    width: 250px;
-  }
-
-  .timelineMilestone > span {
-    font-size: 2.5rem;
-  }
-
-  .timelineMilestone h3 {
-    font-size: 1.35rem;
-  }
-
-  .timelineMilestone p {
-    font-size: 0.82rem;
-    line-height: 1.55;
+  .timeline li {
+    grid-template-columns: 1fr;
+    gap: 0.35rem;
   }
 
   .labVisual {
@@ -2034,35 +1860,5 @@
 @media (prefers-reduced-motion: reduce) {
   .marquee div {
     animation: none;
-  }
-
-  .timelineStage {
-    height: auto;
-  }
-
-  .timelineSticky {
-    height: auto;
-    position: relative;
-    top: auto;
-    overflow-x: auto;
-  }
-
-  .timelineViewport {
-    min-height: 560px;
-    overflow-x: auto;
-  }
-
-  .timelineTrack {
-    transform: none !important;
-  }
-
-  .timelineWaveProgress {
-    stroke-dashoffset: 0;
-  }
-
-  .timelineFloatingImage {
-    opacity: 0.88;
-    filter: grayscale(0.2);
-    transform: none;
   }
 }
