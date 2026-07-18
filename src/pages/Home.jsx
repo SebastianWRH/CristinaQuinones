@@ -328,27 +328,40 @@ function Home() {
                 parallaxDistance={16}
               />
 
-              <ol className={styles.timeline}>
-                {timeline.map((item, index) => (
-                  <RevealOnScroll
-                    as="li"
-                    key={`${item.year}-${item.title}`}
-                    variant="card"
-                    delay={index * 90}
-                    distance={34}
-                    duration={780}
-                    blur={4}
-                  >
-                    <span>{item.year}</span>
-                    <div>
-                      <h3>{item.title}</h3>
-                      <p>{item.body}</p>
-                    </div>
-                  </RevealOnScroll>
-                ))}
-              </ol>
             </div>
           </div>
+
+          <RevealOnScroll
+            as="div"
+            className={styles.timelineScroller}
+            variant="card"
+            distance={36}
+            duration={860}
+            blur={5}
+          >
+            <ol
+              className={styles.timeline}
+              aria-label={language === 'es' ? 'Linea de tiempo de Cristina QuiÃ±ones' : 'Cristina QuiÃ±ones timeline'}
+            >
+              {timeline.map((item, index) => (
+                <RevealOnScroll
+                  as="li"
+                  key={`${item.year}-${item.title}`}
+                  variant="card"
+                  delay={index * 100}
+                  distance={42}
+                  duration={820}
+                  blur={5}
+                >
+                  <span>{item.year}</span>
+                  <div>
+                    <h3>{item.title}</h3>
+                    <p>{item.body}</p>
+                  </div>
+                </RevealOnScroll>
+              ))}
+            </ol>
+          </RevealOnScroll>
         </section>
 
         <section id="frases" className={styles.darkSection}>
