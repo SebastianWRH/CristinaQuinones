@@ -6,9 +6,9 @@ import { LanguageProvider } from '../i18n/LanguageProvider';
 export function renderWithProviders(ui, { route = '/' } = {}) {
   return render(
     <HelmetProvider>
-      <LanguageProvider>
-        <MemoryRouter initialEntries={[route]}>{ui}</MemoryRouter>
-      </LanguageProvider>
+      <MemoryRouter initialEntries={[route]}>
+        <LanguageProvider>{ui}</LanguageProvider>
+      </MemoryRouter>
     </HelmetProvider>
   );
 }

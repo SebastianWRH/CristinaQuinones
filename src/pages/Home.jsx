@@ -20,6 +20,14 @@ import ContactForm from '../components/ContactForm/ContactForm';
 import RevealOnScroll from '../components/RevealOnScroll/RevealOnScroll';
 import SEO from '../components/SEO/SEO';
 import { useTranslation } from '../i18n/useTranslation';
+import {
+  PERSON_NAME,
+  SITE_NAME,
+  SOCIAL_PROFILES,
+  getLocalizedPath,
+  getSiteUrl,
+  toAbsoluteUrl,
+} from '../utils/seo';
 import styles from './Home.module.css';
 
 function getStatProgress(value) {
@@ -61,36 +69,107 @@ function Home() {
   );
   const activeVideo = videos[activeVideoIndex] ?? videos[0];
   const activeVideoTitle = getVideoTitle(activeVideo, language);
+  const metaTitle = t('home.meta.title');
+  const metaDescription = t('home.meta.description');
+  const metaImage = t('home.meta.image');
+  const canonical = getLocalizedPath('/', language);
+  const canonicalUrl = toAbsoluteUrl(canonical);
+  const imageUrl = toAbsoluteUrl(metaImage);
+  const siteUrl = getSiteUrl();
+  const inLanguage = language === 'es' ? 'es-PE' : 'en';
 
   const jsonLd = {
     '@context': 'https://schema.org',
-    '@type': 'Person',
-    name: 'Cristina QuiÃ±ones DÃ¡vila',
-    alternateName: 'Cristina Q',
-    url: t('home.meta.canonical'),
-    image: t('home.meta.image'),
-    jobTitle:
-      language === 'es'
-        ? 'PsicÃ³loga social, autora, conferencista y CEO de Consumer Truth'
-        : 'Social psychologist, author, speaker and Consumer Truth CEO',
-    worksFor: {
-      '@type': 'Organization',
-      name: 'Consumer Truth',
-      url: 'https://consumer-truth.com.pe/',
-    },
-    knowsAbout: [
-      'Consumer Insights',
-      'Consumer Psychology',
-      'Marketing Strategy',
-      'Cultural Transformation',
-      'Leadership',
-    ],
-    sameAs: [
-      'https://www.linkedin.com/in/crisquinones/',
-      'https://www.instagram.com/cristina_qd/',
-      'https://www.tiktok.com/@cristinaqd',
-      'https://www.youtube.com/@Consumer_Truth',
-      'https://x.com/cristinaq',
+    '@graph': [
+      {
+        '@type': 'WebSite',
+        '@id': `${siteUrl}/#website`,
+        name: SITE_NAME,
+        url: siteUrl,
+        inLanguage: ['es-PE', 'en'],
+        publisher: {
+          '@id': `${siteUrl}/#person`,
+        },
+      },
+      {
+        '@type': 'WebPage',
+        '@id': `${canonicalUrl}#webpage`,
+        url: canonicalUrl,
+        name: metaTitle,
+        description: metaDescription,
+        inLanguage,
+        isPartOf: {
+          '@id': `${siteUrl}/#website`,
+        },
+        about: {
+          '@id': `${siteUrl}/#person`,
+        },
+        mainEntity: {
+          '@id': `${siteUrl}/#person`,
+        },
+        primaryImageOfPage: {
+          '@id': `${siteUrl}/#primaryimage`,
+        },
+      },
+      {
+        '@type': 'ImageObject',
+        '@id': `${siteUrl}/#primaryimage`,
+        url: imageUrl,
+        contentUrl: imageUrl,
+        caption: SITE_NAME,
+      },
+      {
+        '@type': 'Person',
+        '@id': `${siteUrl}/#person`,
+        name: PERSON_NAME,
+        alternateName: ['Cristina Quiñones', 'Cristina Q'],
+        url: siteUrl,
+        image: imageUrl,
+        description: metaDescription,
+        jobTitle:
+          language === 'es'
+            ? 'Psicóloga social, autora, conferencista y CEO de Consumer Truth'
+            : 'Social psychologist, author, speaker and Consumer Truth CEO',
+        email: `mailto:${t('home.contact.email')}`,
+        telephone: '+51998244997',
+        address: {
+          '@type': 'PostalAddress',
+          addressLocality: 'Miraflores',
+          addressRegion: 'Lima',
+          addressCountry: 'PE',
+        },
+        worksFor: {
+          '@id': 'https://consumer-truth.com.pe/#organization',
+        },
+        knowsAbout: [
+          'Consumer Insights',
+          'Consumer Psychology',
+          'Marketing Strategy',
+          'Cultural Transformation',
+          'Leadership',
+        ],
+        sameAs: SOCIAL_PROFILES,
+      },
+      {
+        '@type': 'Organization',
+        '@id': 'https://consumer-truth.com.pe/#organization',
+        name: 'Consumer Truth',
+        url: 'https://consumer-truth.com.pe/',
+        founder: {
+          '@id': `${siteUrl}/#person`,
+        },
+      },
+      {
+        '@type': 'ItemList',
+        '@id': `${canonicalUrl}#books`,
+        name: t('home.books.label'),
+        itemListElement: books.map((book, index) => ({
+          '@type': 'ListItem',
+          position: index + 1,
+          name: book.copy.title,
+          url: toAbsoluteUrl(getLocalizedPath(`/libros/${book.slug}`, language)),
+        })),
+      },
     ],
   };
 
@@ -120,15 +199,16 @@ function Home() {
   return (
     <>
       <SEO
-        title={t('home.meta.title')}
-        description={t('home.meta.description')}
+        title={metaTitle}
+        description={metaDescription}
         keywords={t('home.meta.keywords')}
-        canonical={t('home.meta.canonical')}
-        image={t('home.meta.image')}
+        canonical={canonical}
+        image={metaImage}
+        imageAlt={SITE_NAME}
         jsonLd={jsonLd}
         alternateLinks={[
           { hrefLang: 'es-PE', href: '/' },
-          { hrefLang: 'en', href: '/' },
+          { hrefLang: 'en', href: '/?lang=en' },
           { hrefLang: 'x-default', href: '/' },
         ]}
       />

@@ -47,7 +47,7 @@
 }
 
 .heroMedia {
-  background-image: url('../assets/heroimage.webp');
+  background-image: url('/cristina-quinones-hero.webp');
   background-position: center;
   background-size: cover;
 }

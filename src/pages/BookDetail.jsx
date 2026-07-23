@@ -3,6 +3,13 @@ import RevealOnScroll from '../components/RevealOnScroll/RevealOnScroll';
 import SEO from '../components/SEO/SEO';
 import { getBookBySlug, getBookCopy } from '../data/books';
 import { useTranslation } from '../i18n/useTranslation';
+import {
+  PERSON_NAME,
+  SITE_NAME,
+  getLocalizedPath,
+  getSiteUrl,
+  toAbsoluteUrl,
+} from '../utils/seo';
 import NotFound from './NotFound';
 import styles from './BookDetail.module.css';
 
@@ -16,46 +23,89 @@ function BookDetail() {
   }
 
   const copy = getBookCopy(book, language);
-  const canonical = `/libros/${book.slug}`;
-  const siteUrl = (import.meta.env.VITE_SITE_URL || 'https://www.cristinaquinones.com').replace(
-    /\/$/,
-    ''
-  );
-  const imageUrl = /^https?:\/\//i.test(book.image)
-    ? book.image
-    : `${siteUrl}${book.image}`;
+  const bookPath = `/libros/${book.slug}`;
+  const canonical = getLocalizedPath(bookPath, language);
+  const siteUrl = getSiteUrl();
+  const pageUrl = toAbsoluteUrl(canonical);
+  const imageUrl = toAbsoluteUrl(book.image);
+  const title = `${copy.title} | ${PERSON_NAME}`;
+  const inLanguage = language === 'es' ? 'es-PE' : 'en';
   const jsonLd = {
     '@context': 'https://schema.org',
-    '@type': 'Book',
-    name: copy.title,
-    description: copy.intro,
-    image: imageUrl,
-    author: {
-      '@type': 'Person',
-      name: 'Cristina Quiñones Dávila',
-    },
-    publisher: {
-      '@type': 'Organization',
-      name: book.publisher,
-    },
-    datePublished: book.year,
-    inLanguage: language === 'es' ? 'es-PE' : 'en',
-    url: book.buyUrl,
+    '@graph': [
+      {
+        '@type': 'WebPage',
+        '@id': `${pageUrl}#webpage`,
+        url: pageUrl,
+        name: title,
+        description: copy.intro,
+        inLanguage,
+        isPartOf: {
+          '@id': `${siteUrl}/#website`,
+        },
+        about: {
+          '@id': `${pageUrl}#book`,
+        },
+        mainEntity: {
+          '@id': `${pageUrl}#book`,
+        },
+      },
+      {
+        '@type': 'BreadcrumbList',
+        '@id': `${pageUrl}#breadcrumb`,
+        itemListElement: [
+          {
+            '@type': 'ListItem',
+            position: 1,
+            name: SITE_NAME,
+            item: siteUrl,
+          },
+          {
+            '@type': 'ListItem',
+            position: 2,
+            name: copy.title,
+            item: pageUrl,
+          },
+        ],
+      },
+      {
+        '@type': 'Book',
+        '@id': `${pageUrl}#book`,
+        name: copy.title,
+        alternateName: copy.subtitle,
+        description: copy.intro,
+        image: imageUrl,
+        author: {
+          '@id': `${siteUrl}/#person`,
+          name: PERSON_NAME,
+        },
+        publisher: {
+          '@type': 'Organization',
+          name: book.publisher,
+        },
+        datePublished: book.year,
+        inLanguage,
+        url: pageUrl,
+        sameAs: book.buyUrl,
+        about: copy.highlights,
+      },
+    ],
   };
 
   return (
     <>
       <SEO
-        title={`${copy.title} | Cristina Quiñones`}
+        title={title}
         description={copy.intro}
         canonical={canonical}
         image={book.image}
+        imageAlt={copy.imageAlt}
         type="book"
         jsonLd={jsonLd}
         alternateLinks={[
-          { hrefLang: 'es-PE', href: canonical },
-          { hrefLang: 'en', href: canonical },
-          { hrefLang: 'x-default', href: canonical },
+          { hrefLang: 'es-PE', href: bookPath },
+          { hrefLang: 'en', href: getLocalizedPath(bookPath, 'en') },
+          { hrefLang: 'x-default', href: bookPath },
         ]}
       />
 
