@@ -127,7 +127,13 @@ function BookDetail() {
             parallax
             parallaxDistance={16}
           >
-            <img src={book.image} alt={copy.imageAlt} />
+            <img
+              src={book.image}
+              alt={copy.imageAlt}
+              decoding="async"
+              width={book.imageWidth}
+              height={book.imageHeight}
+            />
           </RevealOnScroll>
 
           <RevealOnScroll

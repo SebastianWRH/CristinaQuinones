@@ -1,8 +1,11 @@
 ﻿import { useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import storyImage from '../../imagenes/mi historia.jpg';
-import conferenceImage from '../../imagenes/conferencias.jpg';
-import labImage from '../../imagenes/laboratorio insighter.jpg';
+import storyImage476 from '../../imagenes/mi-historia-476.webp';
+import storyImage720 from '../../imagenes/mi-historia-720.webp';
+import conferenceImage720 from '../../imagenes/conferencias-720.webp';
+import conferenceImage980 from '../../imagenes/conferencias-980.webp';
+import labImage720 from '../../imagenes/laboratorio-insighter-720.webp';
+import labImage1000 from '../../imagenes/laboratorio-insighter-1000.webp';
 import { books as bookData, getBookCopy } from '../data/books';
 import {
   getVideoEmbedUrl,
@@ -397,9 +400,14 @@ function Home() {
                 as="img"
                 className={styles.storyImage}
                 variant="image"
-                src={storyImage}
+                src={storyImage476}
+                srcSet={`${storyImage476} 476w, ${storyImage720} 720w`}
+                sizes="(max-width: 720px) 90vw, 476px"
                 alt={t('home.story.imageAlt')}
                 loading="lazy"
+                decoding="async"
+                width="476"
+                height="317"
                 distance={34}
                 duration={960}
                 scale={1.05}
@@ -501,7 +509,16 @@ function Home() {
               parallax
               parallaxDistance={18}
             >
-              <img src={conferenceImage} alt={t('home.conferences.cardTitle')} loading="lazy" />
+              <img
+                src={conferenceImage980}
+                srcSet={`${conferenceImage720} 720w, ${conferenceImage980} 980w`}
+                sizes="(max-width: 1100px) 90vw, 980px"
+                alt={t('home.conferences.cardTitle')}
+                loading="lazy"
+                decoding="async"
+                width="980"
+                height="604"
+              />
               <figcaption>
                 <span>{t('home.conferences.cardTitle')}</span>
                 <p>{t('home.conferences.cardQuote')}</p>
@@ -562,6 +579,9 @@ function Home() {
                       src={book.image}
                       alt={copy.imageAlt}
                       loading="lazy"
+                      decoding="async"
+                      width={book.imageWidth}
+                      height={book.imageHeight}
                     />
                     <span>{`${book.year} · ${book.publisher}`}</span>
                     <h3>{copy.title}</h3>
@@ -667,9 +687,14 @@ function Home() {
             parallaxDistance={18}
           >
             <img
-              src={labImage}
+              src={labImage720}
+              srcSet={`${labImage720} 720w, ${labImage1000} 1000w`}
+              sizes="(max-width: 1100px) 90vw, 42vw"
               alt={t('home.lab.titleTop')}
               loading="lazy"
+              decoding="async"
+              width="720"
+              height="842"
             />
             <span>{t('home.lab.location')}</span>
           </RevealOnScroll>
@@ -742,7 +767,12 @@ function Home() {
                   blur={5}
                 >
                   <span className={styles.videoImageWrap}>
-                    <img src={getVideoThumbnail(video)} alt="" loading="lazy" />
+                    <img
+                      src={getVideoThumbnail(video)}
+                      alt=""
+                      loading="lazy"
+                      decoding="async"
+                    />
                     <span className={styles.videoPlayIcon} aria-hidden="true" />
                   </span>
                   <span className={styles.videoCaption}>
@@ -791,7 +821,12 @@ function Home() {
                       : `Play video: ${activeVideoTitle}`
                   }
                 >
-                  <img src={getVideoThumbnail(activeVideo)} alt="" loading="lazy" />
+                  <img
+                    src={getVideoThumbnail(activeVideo)}
+                    alt=""
+                    loading="lazy"
+                    decoding="async"
+                  />
                   <span className={styles.videoPlayIcon} aria-hidden="true" />
                 </button>
               )}

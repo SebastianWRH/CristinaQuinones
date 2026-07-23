@@ -1,10 +1,12 @@
-import consumerMindBookImage from '../../imagenes/libro_desnudando_la_mente_del_consumidor.jpg';
-import streetStrategyBookImage from '../../imagenes/web_insightsconcalle_bootcamp_libro_estrategias_calle_.png';
+import consumerMindBookImage from '../../imagenes/libro-desnudando-la-mente-del-consumidor.webp';
+import streetStrategyBookImage from '../../imagenes/libro-estrategias-con-calle.webp';
 
 export const books = [
   {
     slug: 'desnudando-la-mente-del-consumidor',
     image: consumerMindBookImage,
+    imageWidth: 357,
+    imageHeight: 481,
     year: '2013',
     publisher: 'Editorial Planeta',
     buyUrl: 'https://www.planetadelibros.com.pe/libro-desnudando-la-mente-del-consumidor/187813',
@@ -58,6 +60,8 @@ export const books = [
   {
     slug: 'estrategias-con-calle',
     image: streetStrategyBookImage,
+    imageWidth: 339,
+    imageHeight: 500,
     year: '2019',
     publisher: 'Editorial Planeta',
     buyUrl: 'https://www.planetadelibros.com.pe/libro-estrategias-con-calle/294680',

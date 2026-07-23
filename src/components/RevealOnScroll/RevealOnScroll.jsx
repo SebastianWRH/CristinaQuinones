@@ -16,10 +16,6 @@ function getReducedMotionPreference() {
   return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 }
 
-function clamp(value, min, max) {
-  return Math.min(Math.max(value, min), max);
-}
-
 function RevealOnScroll({
   as: Component = 'div',
   children,
@@ -104,61 +100,6 @@ function RevealOnScroll({
     };
   }, [onReveal, once, rootMargin, threshold]);
 
-  useEffect(() => {
-    if (!parallax || !isVisible || getReducedMotionPreference()) {
-      return undefined;
-    }
-
-    const element = elementRef.current;
-
-    if (!element || typeof window === 'undefined') {
-      return undefined;
-    }
-
-    let frame = 0;
-    const maxOffset = Math.min(Math.abs(parallaxDistance), 20);
-
-    const updateParallax = () => {
-      frame = 0;
-
-      const rect = element.getBoundingClientRect();
-      const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
-
-      if (rect.bottom < 0 || rect.top > viewportHeight) {
-        return;
-      }
-
-      const elementCenter = rect.top + rect.height / 2;
-      const viewportCenter = viewportHeight / 2;
-      const range = viewportCenter + rect.height / 2;
-      const progress = range > 0 ? (elementCenter - viewportCenter) / range : 0;
-      const offsetY = clamp(progress * -maxOffset, -maxOffset, maxOffset);
-
-      element.style.setProperty('--reveal-parallax-y', `${offsetY.toFixed(2)}px`);
-    };
-
-    const scheduleUpdate = () => {
-      if (frame) {
-        return;
-      }
-
-      frame = window.requestAnimationFrame(updateParallax);
-    };
-
-    updateParallax();
-    window.addEventListener('scroll', scheduleUpdate, { passive: true });
-    window.addEventListener('resize', scheduleUpdate);
-
-    return () => {
-      if (frame) {
-        window.cancelAnimationFrame(frame);
-      }
-
-      window.removeEventListener('scroll', scheduleUpdate);
-      window.removeEventListener('resize', scheduleUpdate);
-    };
-  }, [isVisible, parallax, parallaxDistance]);
-
   const revealStyle = {
     '--reveal-delay': `${delay}ms`,
     '--reveal-duration': `${duration}ms`,
@@ -167,6 +108,10 @@ function RevealOnScroll({
     '--reveal-scale': scale,
     '--reveal-blur': `${blur}px`,
     '--reveal-rotate': variant === 'icon' ? '3deg' : '0deg',
+    '--reveal-parallax-y': '0px',
+    ...(parallax
+      ? { '--reveal-parallax-distance': `${Math.min(Math.abs(parallaxDistance), 20)}px` }
+      : null),
     ...style,
   };
 

@@ -103,10 +103,10 @@ describe('App', () => {
     ).toBe(true);
   });
 
-  it('shows a real 404 page for an unknown book slug', () => {
+  it('shows a real 404 page for an unknown book slug', async () => {
     renderWithProviders(<App />, { route: '/libros/no-existe' });
 
-    expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(
+    expect(await screen.findByRole('heading', { level: 1 })).toHaveTextContent(
       /no encontrada/i
     );
   });
