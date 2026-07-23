@@ -64,7 +64,11 @@ function Footer() {
             href="https://www.youtube.com/@Consumer_Truth"
             target="_blank"
             rel="noreferrer"
-            aria-label="YouTube"
+            aria-label={
+              language === 'es'
+                ? 'Canal de YouTube de Consumer Truth'
+                : 'Consumer Truth YouTube channel'
+            }
           >
             YT
           </a>

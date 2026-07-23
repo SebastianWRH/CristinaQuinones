@@ -47,9 +47,9 @@
 }
 
 .form small {
-  color: rgba(107, 98, 90, 0.78);
+  color: #4d4640;
   font-size: 0.68rem;
-  font-weight: 600;
+  font-weight: 700;
 }
 
 .form input,

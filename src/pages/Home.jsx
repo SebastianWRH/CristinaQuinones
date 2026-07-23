@@ -742,7 +742,7 @@ function Home() {
                   blur={5}
                 >
                   <span className={styles.videoImageWrap}>
-                    <img src={getVideoThumbnail(video)} alt={videoTitle} loading="lazy" />
+                    <img src={getVideoThumbnail(video)} alt="" loading="lazy" />
                     <span className={styles.videoPlayIcon} aria-hidden="true" />
                   </span>
                   <span className={styles.videoCaption}>
@@ -760,6 +760,11 @@ function Home() {
                 href={getVideoWatchUrl(activeVideo)}
                 target="_blank"
                 rel="noreferrer"
+                aria-label={
+                  language === 'es'
+                    ? `Ver en YouTube: ${activeVideoTitle}`
+                    : `Watch on YouTube: ${activeVideoTitle}`
+                }
               >
                 YouTube
               </a>
